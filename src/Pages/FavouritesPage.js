@@ -1,21 +1,15 @@
 import React from 'react'
 import LandingPage from './LandingPage'
 import NavBar from '../common/NavBar'
+import{useState, useEffect} from 'react'
+import DisplayPhotos from '../common/DisplayPhotos'
 
-const FavouritesPage = ({favPhotos}) => {
-  console.log(favPhotos)
+const FavouritesPage = ({favPhotos,handleFavList,isFav}) => {
   return (
     <div>
         <NavBar></NavBar>
         <main>
-          <section className='photos'>
-          <div className='photos-center'>
-          { favPhotos.map((photo,index)=>{
-               console.log("hello")
-               return photo
-          })}
-          </div>
-          </section>
+        <DisplayPhotos photos={favPhotos} handleFavList={handleFavList} isFav={isFav}></DisplayPhotos>
         </main>
     </div>
   )

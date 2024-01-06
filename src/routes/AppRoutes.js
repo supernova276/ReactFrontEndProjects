@@ -9,12 +9,11 @@ const AppRoutes = () => {
 
   const handleFavList=(favArray)=>{
     setFavlist(favArray)
-    console.log("favarray is",favArray)
   }
   return (
     <Routes>
-        <Route path="/" element={<LandingPage handleFavList={handleFavList}></LandingPage>}></Route>
-        <Route path="/favourites" element={<FavouritesPage favPhotos={favlist}></FavouritesPage>}></Route>
+        <Route path="/" element={<LandingPage  handleFavList={handleFavList} isFav={false}></LandingPage>}></Route>
+        <Route path="/favourites" element={<FavouritesPage favPhotos={favlist} handleFavList={handleFavList} isFav={true}></FavouritesPage>}></Route>
     </Routes>
   )
 }

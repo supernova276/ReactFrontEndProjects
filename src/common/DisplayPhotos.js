@@ -1,9 +1,17 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+import Lightbox from 'react-image-lightbox'
+import { useState } from 'react'
 
+const DisplayPhotos = ({photos,handleFavList,isFav}) => {
 
-const DisplayPhotos = ({photos}) => {
+    console.log("photos",photos)
 
-    const [fav,setFav]=useState([])
+    const [fav,setFav]=useState(isFav?photos:[])
+    console.log("value of fav is",fav)
+    // const[isFav,setIsFav]=useState(true)
+    const[IsLightboxOpen,setIsLightboxOpen]=useState(false)
+    const[lightBoxIndex,setLightBoxIndex]=useState(0)
 
     const handleShare=(photoUrl)=>{
         const shareUrl=`https://api.whatsapp.com/send?text=${encodeURIComponent(`Checkout this amazing photo :
@@ -21,19 +29,23 @@ const handleDownload=(photoUrl,photoId)=>{
 
 const handleFavClick=(photoId)=>{
 
+   console.log(fav.length)
     const currIdex=fav.findIndex((favPhoto)=>favPhoto.id===photoId)
     if(currIdex!==-1){
-      setFav((previousState)=>{
-       previousState.filter((favPhoto)=>favPhoto.id!==photoId)
-      })
+       
+    //     handleFavList(setFav((previousState)=>{
+    //    return previousState.filter((favPhoto)=>favPhoto.id!==photoId)
+    //   }))
+    let favlist=fav.filter((favPhoto)=>favPhoto.id!==photoId)
+    handleFavList(favlist)
+    setFav(favlist)
     }
     else if(currIdex===-1){
-           
+            
                let favPhotoToAdd=photos.find((photo)=>photoId===photo.id)
                let favlist=[...fav,favPhotoToAdd]
                setFav((previousState)=>[...previousState,favPhotoToAdd])
                handleFavList(favlist)
-
     }
 }
 
@@ -41,10 +53,22 @@ const OpenLightbox=(index)=>{
     setLightBoxIndex(index)
     setIsLightboxOpen(true)
 }
-  return (
-    <div>
 
-{photos.map((photo,index)=>{
+const CloseLightbox=()=>{
+    setIsLightboxOpen(false)
+}
+
+const handleRemove=(photoId)=>{
+    // setFav(previousState=>previousState.filter(photos.id!==photoId))
+    // let favlist=fav
+}
+
+  return (
+ <div>
+ <section className='photos'>
+<div className="photos-center">
+{ 
+photos.map((photo,index)=>{
           return <article key={photo.id} className={`photo 
           ${fav.some((favPhoto)=>favPhoto.id===photo.id)?'favourite-photo':""}`}>
             <img src={photo.urls.regular} alt={`${photo.alt_description}`} onClick={()=>OpenLightbox(index)}></img>
@@ -64,8 +88,15 @@ const OpenLightbox=(index)=>{
                 </Link>
             </div>
            </article>
-        })} 
+        })}
+
+        {IsLightboxOpen && (
+
+        <Lightbox mainSrc={photos[lightBoxIndex].urls.full} onClose={CloseLightbox}></Lightbox>
+      ) } 
       
+    </div>
+    </section>
     </div>
   )
 }
