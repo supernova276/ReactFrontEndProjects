@@ -2,8 +2,6 @@ import React from 'react'
 import NavBar from '../common/NavBar'
 import{useState, useEffect} from 'react'
 import { getPhotos } from '../api/photos'
-import {Link} from 'react-router-dom'
-import Lightbox from 'react-image-lightbox'
 import DisplayPhotos from '../common/DisplayPhotos'
 const LandingPage = ({handleFavList,isFav}) => {
 

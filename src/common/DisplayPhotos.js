@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import Lightbox from 'react-image-lightbox'
+import Lightbox from 'react-18-image-lightbox'
+import 'react-18-image-lightbox/style.css';
 import { useState } from 'react'
 
 const DisplayPhotos = ({photos,handleFavList,isFav}) => {
@@ -92,7 +93,7 @@ photos.map((photo,index)=>{
 
         {IsLightboxOpen && (
 
-        <Lightbox mainSrc={photos[lightBoxIndex].urls.full} onClose={CloseLightbox}></Lightbox>
+        <Lightbox mainSrc={photos[lightBoxIndex].urls.full} onCloseRequest={CloseLightbox}></Lightbox>
       ) } 
       
     </div>
